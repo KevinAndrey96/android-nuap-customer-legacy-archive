@@ -7,10 +7,23 @@
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding UserProfile}"
-            Padding="20,150,20,0">
+            Padding="20,10,20,0">
+            <StackLayout
+                Orientation="Horizontal">
+                <Image
+                    WidthRequest="30"
+                    Margin="0,20,0,10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start"
+                    Source="flecha">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReturnCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
             <Label
                 Text="Editar Perfil"
-                Padding="20,0,0,0"
+                Padding="20,70,0,0"
                 TextColor="#0274bc" 
                 FontFamily="Poppins-Bold"
                 FontSize="20"
@@ -52,14 +65,13 @@
                         HorizontalOptions="Start" 
                         Source="ic_envelope">
                     </Image>
-                    <Entry
-                        Keyboard="Email"
+                    <Label
                         FontFamily="Poppins"
                         HorizontalOptions="FillAndExpand" 
                         FontSize="16"
                         TextColor="#3a3a3a"
-                        Text="{Binding Email, Mode=TwoWay}">
-                    </Entry>
+                        Text="{Binding Email}">
+                    </Label>
                 </StackLayout>
                 <Label
                     Text="Teléfono"
@@ -74,15 +86,15 @@
                         HorizontalOptions="Start" 
                         Source="ic_smartphone">
                     </Image>
-                    <Entry
+                    <Label
                         FontFamily="Poppins"
                         FontSize="16"
                         HorizontalOptions="FillAndExpand" 
                         TextColor="#3a3a3a"
-                        Text="{Binding Phone, Mode=TwoWay}">
-                    </Entry>
+                        Text="{Binding Phone}">
+                    </Label>
                 </StackLayout>
-                <Label
+                <!--<Label
                     Padding="0,15,0,0"
                     Text="¿Deseas cambiar tu contraseña?"
                     TextColor="#0274bc" 
@@ -106,7 +118,7 @@
                         Command="{Binding ChangePasswordCommand}"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
                     </Button>
-                </StackLayout>
+                </StackLayout>-->
                 <StackLayout
                     Padding="40,60,40,0">
                     <Button

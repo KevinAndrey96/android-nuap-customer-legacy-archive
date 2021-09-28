@@ -66,8 +66,6 @@
         {
             this.apiService = new ApiService();
             this.IsEnabled = true;
-            this.Email = "cliente@test.com";
-            this.Password = "Nuap2020@";
         }
 
         private async void Register()
@@ -155,6 +153,7 @@
 
             if (response.Data.phone_validated == 1)
             {
+                await Application.Current.MainPage.Navigation.PopAsync();
                 mainViewModel.GenerateOTP = new GenerateOtpViewModel();
                 await Application.Current.MainPage.Navigation.PushAsync(new GenerateOtpPage());
             } else
@@ -165,15 +164,9 @@
                 Settings.Email = response.Data.email;
                 Settings.Id = response.Data.id.ToString();
 
-                if (response.Data.role == "Usuario")
-                {
-                    mainViewModel.Home = new HomeViewModel();
-                    await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
-                } else
-                {
-                    mainViewModel.HomeCommerce = new HomeCommerceViewModel();
-                    await Application.Current.MainPage.Navigation.PushAsync(new HomeCommerceTabbedPage());
-                }
+                await Application.Current.MainPage.Navigation.PopAsync();
+                mainViewModel.Home = new HomeViewModel();
+                await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
             }
         }
     }

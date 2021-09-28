@@ -4,7 +4,16 @@
 
     public class Delivery
     {
+        [JsonProperty(PropertyName = "delivery")]
+        public string DeliveryTotal { get; set; }
+
         [JsonProperty(PropertyName = "discount")]
-        public int Discount { get; set; }
+        public string Discount { get; set; }
+
+        [JsonProperty(PropertyName = "total_amount")]
+        public string TotalAmount { get; set; }
+
+        [JsonProperty(PropertyName = "total")]
+        public string Total { get; set; }
     }
 }

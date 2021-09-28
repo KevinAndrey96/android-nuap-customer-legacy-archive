@@ -8,15 +8,25 @@
     using Xamarin.Forms;
     using Services;
     using System.Linq;
+    using Helpers;
     using System.Collections.Generic;
 
-    public class CartViewModel: BaseViewModel
+    public class CartViewModel : BaseViewModel
     {
         private ApiService apiService;
         private ObservableCollection<Cart> cart;
         private bool isRefreshing;
-        private double total;
-        private int delivery;
+        private bool isEnabled;
+        private string total;
+        private string delivery;
+        private string discount;
+        private string addressText;
+
+        public string AddressText
+        {
+            get { return this.addressText; }
+            set { SetValue(ref this.addressText, value); }
+        }
 
         public bool IsRefreshing
         {
@@ -24,16 +34,28 @@
             set { SetValue(ref this.isRefreshing, value); }
         }
 
-        public double Total
+        public bool IsEnabled
+        {
+            get { return this.isEnabled; }
+            set { SetValue(ref this.isEnabled, value); }
+        }
+
+        public string Total
         {
             get { return this.total; }
             set { SetValue(ref this.total, value); }
         }
 
-        public int Delivery
+        public string Delivery
         {
             get { return this.delivery; }
             set { SetValue(ref this.delivery, value); }
+        }
+
+        public string Discount
+        {
+            get { return this.discount; }
+            set { SetValue(ref this.discount, value); }
         }
 
         public ObservableCollection<Cart> Cart
@@ -42,94 +64,73 @@
             set { SetValue(ref this.cart, value); }
         }
 
-        public ICommand DiminishCommand
+        public ICommand ChoosePaymentMethodCommand
         {
             get
             {
-                //return new RelayCommand(Diminish);
-                return new Command<string>((x) => Diminish(x));
+                return new RelayCommand(ChoosePaymentMethod);
             }
         }
 
-        public ICommand CreateOrderCommand
+        public ICommand AddProductsCommand
         {
             get
             {
-                return new RelayCommand(CreateOrder);
+                return new RelayCommand(AddProducts);
             }
         }
 
-
-        public ICommand IncreaseCommand
+        public ICommand RefreshCommand
         {
             get
             {
-                return new RelayCommand(Increase);
+                return new RelayCommand(LoadCart);
+            }
+        }
+
+        public ICommand CartEmptyCommand
+        {
+            get
+            {
+                return new RelayCommand(CartEmpty);
+            }
+        }
+
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
             }
         }
 
         public CartViewModel()
         {
+            this.IsEnabled = false;
             this.apiService = new ApiService();
             this.LoadCart();
         }
 
-        private async void Diminish(string Id)
-        {
-            await Application.Current.MainPage.DisplayAlert(
-                    "Alerta",
-                    "Si sirvio" + Id,
-                    "Aceptar");
-            return;
-
-            /*if ((this.Quantity - 1) < 0)
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Alerta",
-                    "No puedes agregar menos de 0 productos",
-                    "Aceptar");
-                return;
-            }
-            else
-            {
-                this.Quantity = this.Quantity - 1;
-                this.Total = this.Price * this.Quantity;
-            }*/
-        }
-
-        private async void Increase()
-        {
-            /*if ((this.Quantity + 1) > this.Product.Stock)
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Alerta",
-                    "No puedes agregar más de " + this.Product.Stock + " productos",
-                    "Aceptar");
-                return;
-            }
-            else
-            {
-                this.Quantity = this.Quantity + 1;
-                this.Total = this.Price * this.Quantity;
-            }*/
-        }
-
         private void LoadCart()
         {
+
             var mainViewModel = MainViewModel.GetInstance();
-            this.Total = 0;
+            this.AddressText = mainViewModel.AddressDetail.Addres;
 
-            foreach (var item in mainViewModel.CartList)
-            {
-                item.Price = item.Quantity * item.Price;
-                this.Total += item.Price;
-            }
-
-            this.Cart = new ObservableCollection<Cart>(mainViewModel.CartList);
+            this.Cart = new ObservableCollection<Cart>(ToCartItemViewModel(mainViewModel.CartList));
             this.IsRefreshing = false;
             this.CalculateDelivery();
+        }
 
-            this.Total = this.Total + this.Delivery;
+        private async void CartEmpty()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.CartList = null;
+            Settings.CartList = null;
+
+            mainViewModel.Home = new HomeViewModel();
+            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
         }
 
         private async void CalculateDelivery()
@@ -148,7 +149,6 @@
             var data = new CartDataService();
             data.Products = mainViewModel.CartList;
 
-
             var response = await this.apiService.CalculateDelivery(
                  "https://thenuap.com",
                  mainViewModel.User.api_token,
@@ -165,71 +165,64 @@
 
             if (response.Errors != null)
             {
+                mainViewModel.CartList = null;
+                Settings.CartList = "";
+
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
-                return;
-            }
 
-            this.Delivery = response.Data.Discount;
+                mainViewModel.Home = new HomeViewModel();
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+            }
+            else
+            {
+                this.Delivery = response.Data.DeliveryTotal;
+                this.Total = response.Data.Total;
+                this.Discount = response.Data.Discount;
+
+                this.IsEnabled = true;
+            }
         }
 
-        private async void CreateOrder()
+        private async void ChoosePaymentMethod()
         {
-            
-            var connection = await this.apiService.CheckConnection();
-            if (!connection.IsSuccess)
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    connection.Message,
-                    "Aceptar");
-                return;
-            }
-
             var mainViewModel = MainViewModel.GetInstance();
-            var data = new CartDataService();
-            data.Products = mainViewModel.CartList;
 
-            var response = await this.apiService.CreateOrder(
-                 "https://thenuap.com",
-                 mainViewModel.User.api_token,
-                 19,
-                 data);
+            mainViewModel.CreateOrder = new CreateOrderViewModel();
+            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync(new ChoosePaymentMethodPage());
+        }
 
-            if (response == null)
+        private async void AddProducts()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+
+            mainViewModel.Home = new HomeViewModel();
+            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+        }
+
+        private IEnumerable<CartItemViewModel> ToCartItemViewModel(List<Cart> list)
+        {
+            return list.Select(c => new CartItemViewModel
             {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Ha ocurrido un error",
-                    "Aceptar");
-                return;
-            }
+                Id = c.Id,
+                Name = c.Name,
+                Quantity = c.Quantity,
+                Price = c.Price,
+                TotalPrice = c.TotalPrice,
+                Image = c.Image,
+                Stock = c.Stock
+            });
+        }
 
-            if (response.Errors != null)
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    response.Errors.First().Detail,
-                    "Aceptar");
-                return;
-            }
-
-            List<int> orders = response.Data.Orders;
-            string url = "https://thenuap.com/payment-gateway?";
-            string user = "user=" + mainViewModel.User.id;
-            int count = 0;
-            foreach (var item in orders)
-            {
-                url += "orders["+count+"]="+item+"&";
-                count++;
-            }
-
-            url += user;
-
-            mainViewModel.PaymentGateway = new PaymentGatewayViewModel(url);
-            await Application.Current.MainPage.Navigation.PushAsync(new PaymentGatewayPage());
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

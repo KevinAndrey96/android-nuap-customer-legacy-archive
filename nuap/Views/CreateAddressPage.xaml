@@ -1,109 +1,146 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:Maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="nuap.Views.CreateAddressPage"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}">
-    <ContentPage.Content>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:googleMaps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings"
+    xmlns:local="clr-namespace:nuap.ViewModels"
+    x:Class="nuap.Views.CreateAddressPage"
+    BackgroundImageSource="register.png">
+    <ContentPage.BindingContext>
+        <local:CreateAddressViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout
+        Padding="15,0,20,0">
         <StackLayout
-            BackgroundColor="White"
-            BindingContext="{Binding CreateProduct}"
-            Padding="0,40,0,0">
+            Orientation="Horizontal">
+            <Image
+                WidthRequest="30"
+                Margin="0,20,0,10"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Source="flecha">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ReturnCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
             <Label
-                Text="Agregar Dirección"
-                Padding="20,15,20,20"
-                TextColor="#2a4d9c" 
+                Padding="10,30,10,0"
+                Text="Agrega una dirección para que entreguemos tus pedidos"
+                TextColor="White" 
+                HorizontalTextAlignment="Center"
+                FontSize="16"
                 FontFamily="Poppins-Bold"
-                FontSize="20"
+                FontAttributes="Bold"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+            </Label>
+        </StackLayout>
+        <StackLayout>
+            <Label
+                Text="Selecciona la ubicación en el mapa"
+                Padding="15,55,0,0"
+                TextColor="#3a3a3a" 
+                FontFamily="Poppins-Bold"
+                FontSize="16"
                 VerticalOptions="Center">
             </Label>
-            <StackLayout
-                Padding="20,15,30,0">
-                <ScrollView>
-                    <StackLayout>
-                        <Label
-                            Text="Ciudad"
-                            FontFamily="Poppins"
-                            TextColor="#949494"
-                            FontSize="16"
-                            VerticalOptions="Center">
-                        </Label>
-                        <Entry
-                            FontFamily="Poppins"
-                            HorizontalOptions="FillAndExpand" 
-                            FontSize="16"
-                            TextColor="#3a3a3a"
-                            Text="{Binding City, Mode=TwoWay}">
-                        </Entry>
-                        <Label
-                            Text="Localidad"
-                            FontFamily="Poppins"
-                            TextColor="#949494"
-                            FontSize="16"
-                            VerticalOptions="Center">
-                        </Label>
-                        <Entry
-                            FontFamily="Poppins"
-                            HorizontalOptions="FillAndExpand" 
-                            FontSize="16"
-                            TextColor="#3a3a3a"
-                            Text="{Binding Location, Mode=TwoWay}">
-                        </Entry>
-                        <Label
-                            Text="Barrio"
-                            FontFamily="Poppins"
-                            TextColor="#949494"
-                            FontSize="16"
-                            VerticalOptions="Center">
-                        </Label>
-                        <Entry
-                            FontFamily="Poppins"
-                            HorizontalOptions="FillAndExpand" 
-                            FontSize="16"
-                            TextColor="#3a3a3a"
-                            Text="{Binding Neighborhood, Mode=TwoWay}">
-                        </Entry>
-                        <Label
-                            Text="Dirección"
-                            FontFamily="Poppins"
-                            TextColor="#949494"
-                            FontSize="16"
-                            VerticalOptions="Center">
-                        </Label>
-                        <Entry
-                            FontFamily="Poppins"
-                            HorizontalOptions="FillAndExpand" 
-                            FontSize="16"
-                            TextColor="#3a3a3a"
-                            Text="{Binding Address, Mode=TwoWay}">
-                        </Entry>
-                        <StackLayout>
-                            <Maps:Map
-                                WidthRequest="320"
-                                HeightRequest="200"
-                                MapType="Street"
-                                x:Name="maps">
-                            </Maps:Map>
-                        </StackLayout>
-                    </StackLayout>
-                </ScrollView>
-            </StackLayout>
-            <StackLayout
-                Padding="20,20,20,20">
-                <Button
-                    Text="Agregar dirección"
-                    FontFamily="Poppins"
-                    TextTransform="None"
-                    BackgroundColor="#fd8700"
-                    HeightRequest="62"
-                    TextColor="White"
-                    BorderRadius="20"
-                    Padding="20,20,20,20"
-                    FontSize="16"
-                    Command="{Binding CreateAddressCommand}"
-                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
-                </Button>
-            </StackLayout>
+            <googleMaps:Map  
+                HeightRequest="200"
+                InitialCameraUpdate="4.725800, -74.050556, 12, 0, 0">
+                <googleMaps:Map.Behaviors>
+                    <bindings:BindingPinsBehavior Value="{Binding PinList}"/>
+                    <bindings:MapClickedToCommandBehavior Command="{Binding MapClickedCommand}"/>
+                </googleMaps:Map.Behaviors>
+            </googleMaps:Map>
         </StackLayout>
-    </ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label
+                    Text="Dirección:"
+                    FontFamily="Poppins-Bold"
+                    TextColor="#3a3a3a"
+                    FontSize="16"
+                    VerticalOptions="Center">
+                </Label>
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Entry
+                        FontFamily="Poppins"
+                        HorizontalOptions="FillAndExpand" 
+                        FontSize="16"
+                        TextColor="#3a3a3a"
+                        Text="{Binding Address, Mode=TwoWay}">
+                    </Entry>
+                </StackLayout>
+                <Label
+                    Text="Ciudad:"
+                    FontFamily="Poppins-Bold"
+                    TextColor="#3a3a3a"
+                    FontSize="16"
+                    VerticalOptions="Center">
+                </Label>
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Entry
+                        FontFamily="Poppins"
+                        HorizontalOptions="FillAndExpand" 
+                        FontSize="16"
+                        TextColor="#3a3a3a"
+                        Text="{Binding City, Mode=TwoWay}">
+                    </Entry>
+                </StackLayout>
+                <Label
+                    Text="Localidad:"
+                    FontFamily="Poppins-Bold"
+                    TextColor="#3a3a3a"
+                    FontSize="16"
+                    VerticalOptions="Center">
+                </Label>
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Entry
+                        FontFamily="Poppins"
+                        HorizontalOptions="FillAndExpand" 
+                        FontSize="16"
+                        TextColor="#3a3a3a"
+                        Text="{Binding Location, Mode=TwoWay}">
+                    </Entry>
+                </StackLayout>
+                <Label
+                    Text="Barrio:"
+                    FontFamily="Poppins-Bold"
+                    TextColor="#3a3a3a"
+                    FontSize="16"
+                    VerticalOptions="Center">
+                </Label>
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Entry
+                        FontFamily="Poppins"
+                        HorizontalOptions="FillAndExpand" 
+                        FontSize="16"
+                        TextColor="#3a3a3a"
+                        Text="{Binding Neighborhood, Mode=TwoWay}">
+                    </Entry>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <StackLayout
+            Padding="20,10,20,20">
+            <Button
+                Text="Crear nueva dirección"
+                FontFamily="Poppins"
+                TextTransform="None"
+                BackgroundColor="#fd8700"
+                HeightRequest="60"
+                TextColor="White"
+                BorderRadius="20"
+                Padding="20,20,20,20"
+                FontSize="17"
+                Command="{Binding CreateAddressCommand}"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+            </Button>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>

@@ -76,6 +76,7 @@
 
         private async void GenerateOtp()
         {
+            await Application.Current.MainPage.Navigation.PopAsync();
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.GenerateOTP = new GenerateOtpViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new GenerateOtpPage());
@@ -130,7 +131,7 @@
                 this.IsEnabled = true;
 
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
@@ -147,13 +148,9 @@
 
             if (response.Data.role == "Usuario")
             {
+                await Application.Current.MainPage.Navigation.PopAsync();
                 mainViewModel.Home = new HomeViewModel();
                 await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
-            }
-            else
-            {
-                mainViewModel.HomeCommerce = new HomeCommerceViewModel();
-                await Application.Current.MainPage.Navigation.PushAsync(new HomeCommerceTabbedPage());
             }
         }
     }

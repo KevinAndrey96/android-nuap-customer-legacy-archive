@@ -8,6 +8,19 @@
         <StackLayout
             BindingContext="{Binding Messages}"
             BackgroundColor="White">
+            <StackLayout
+                Orientation="Horizontal">
+                <Image
+                    WidthRequest="30"
+                    Margin="20,20,0,10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start"
+                    Source="flechaazul">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReturnCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
             <ListView 
                 BackgroundColor="#e0dddd"
                 HasUnevenRows="true" 

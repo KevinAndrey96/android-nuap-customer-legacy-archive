@@ -4,9 +4,8 @@
     using System.Windows.Input;
     using System.Linq;
     using Xamarin.Forms;
-    using Views;
     using Services;
-
+    using Views;
     public class CreateTicketViewModel: BaseViewModel
     {
         private ApiService apiService;
@@ -47,12 +46,20 @@
             }
         }
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         private async void NewTicket()
         {
             if (string.IsNullOrEmpty(this.Issues))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                        "Error",
+                        "Información",
                         "Debes ingresar un asunto para poder realizar la solicitud",
                         "Aceptar"
                     );
@@ -62,7 +69,7 @@
             if (string.IsNullOrEmpty(this.Message))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                        "Error",
+                        "Información",
                         "Debes ingresar un mensaje para poder realizar la solicitud",
                         "Aceptar"
                     );
@@ -107,7 +114,7 @@
                 this.Message = "";
 
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
@@ -121,7 +128,16 @@
                 "",
                 "Hemos enviado tu solicitud exitosamente",
                 "Aceptar");
-            return;
+
+            await Application.Current.MainPage.Navigation.PopAsync();
+            mainViewModel.Home = new HomeViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

@@ -8,14 +8,6 @@
 
     public class CategoryItemViewModel : Category
     {
-        public ICommand GetProductsCommand
-        {
-            get
-            {
-                return new RelayCommand(GetProducts);
-            }
-        }
-
         public ICommand GetCategoryProductsCommand
         {
             get
@@ -24,17 +16,13 @@
             }
         }
 
-        private async void GetProducts()
-        {
-            var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.ProductCommerce = new ProductCommerceViewModel(this);
-            await Application.Current.MainPage.Navigation.PushAsync(new ProductCommercePage());
-        }
-
         private async void GetCategoryProducts()
         {
             var mainViewModel = MainViewModel.GetInstance();
+
             mainViewModel.CategoryProduct = new CategoryProductViewModel(this);
+
+            await Application.Current.MainPage.Navigation.PopAsync();
             await Application.Current.MainPage.Navigation.PushAsync(new CategoryProductsPage());
         }
     }

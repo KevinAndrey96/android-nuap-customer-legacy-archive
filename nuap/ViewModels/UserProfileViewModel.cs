@@ -54,6 +54,14 @@
             }
         }
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         private async void UpdateProfile()
         {
             if (string.IsNullOrEmpty(this.Email))
@@ -123,7 +131,7 @@
             if (response.Errors != null)
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
@@ -168,7 +176,7 @@
             if (response.Data == null)
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
@@ -177,6 +185,12 @@
             this.Email = response.Data.Email;
             this.Phone = response.Data.Phone;
             this.Name = response.Data.Name;
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

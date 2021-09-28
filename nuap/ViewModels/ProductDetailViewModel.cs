@@ -10,7 +10,7 @@
     using Helpers;
     using Newtonsoft.Json;
 
-    public class ProductDetailViewModel: BaseViewModel
+    public class ProductDetailViewModel : BaseViewModel
     {
         private ApiService apiService;
 
@@ -26,13 +26,21 @@
         private double width;
         private double height;
         private double price;
+        private string totalPrice;
         private int hasSpecialPrice;
+        private string addressText;
         private Product product;
 
         public Product Product
         {
             get { return this.product; }
             set { SetValue(ref this.product, value); }
+        }
+
+        public string AddressText
+        {
+            get { return this.addressText; }
+            set { SetValue(ref this.addressText, value); }
         }
 
         public string Name
@@ -45,6 +53,12 @@
         {
             get { return this.image; }
             set { SetValue(ref this.image, value); }
+        }
+
+        public string TotalPrice
+        {
+            get { return this.totalPrice; }
+            set { SetValue(ref this.totalPrice, value); }
         }
 
         public string Brand
@@ -141,10 +155,19 @@
             }
         }
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         public ProductDetailViewModel(Product product)
         {
             this.Product = product;
             this.apiService = new ApiService();
+
             this.SetProduct();
         }
 
@@ -157,7 +180,8 @@
                     "No puedes agregar menos de 0 productos",
                     "Aceptar");
                 return;
-            } else
+            }
+            else
             {
                 this.Quantity = this.Quantity - 1;
                 this.Total = this.Price * this.Quantity;
@@ -170,7 +194,7 @@
             {
                 await Application.Current.MainPage.DisplayAlert(
                     "Alerta",
-                    "No puedes agregar más de "+ this.Product.Stock + " productos",
+                    "No puedes agregar más de " + this.Product.Stock + " productos",
                     "Aceptar");
                 return;
             }
@@ -198,7 +222,8 @@
                     "No puedes agregar menos de 0 productos",
                     "Aceptar");
                 return;
-            } else
+            }
+            else
             {
                 this.Total = this.Price * this.Quantity;
             }
@@ -220,7 +245,9 @@
             cart.Quantity = this.Quantity;
             cart.Image = this.Image;
             cart.Price = this.Price;
-            cart.Name = this.Name; 
+            cart.Name = this.Name;
+            cart.TotalPrice = this.TotalPrice;
+            cart.Stock = this.Product.Stock;
 
             var mainViewModel = MainViewModel.GetInstance();
             if (mainViewModel.CartList == null)
@@ -233,9 +260,12 @@
                     "Aceptar");
 
                 Settings.CartList = JsonConvert.SerializeObject(mainViewModel.CartList);
-                mainViewModel.Home = new HomeViewModel();
-                await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
-            } else
+                mainViewModel.Cart = new CartViewModel();
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
+            }
+            else
             {
                 List<Cart> cartList = new List<Cart>();
                 foreach (var item in mainViewModel.CartList)
@@ -244,7 +274,8 @@
                     {
                         cartList.Add(item);
                         continue;
-                    } else
+                    }
+                    else
                     {
                         cart.Quantity = cart.Quantity + item.Quantity;
                     }
@@ -259,14 +290,16 @@
                     "Hemos agregado este producto a tu carrito",
                     "Aceptar");
 
-                mainViewModel.Home = new HomeViewModel();
-                await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+                mainViewModel.Cart = new CartViewModel();
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
             }
         }
 
         private void SetProduct()
         {
-            this.Quantity = 0;
+            this.Quantity = 1;
             this.Name = this.Product.Name;
             this.Brand = this.Product.Brand;
             this.Description = this.Product.Description;
@@ -275,24 +308,32 @@
             this.Length = this.Product.Length;
             this.Width = this.Product.Width;
             this.Height = this.Product.Height;
+            this.TotalPrice = this.Product.TotalPrice;
+            this.Image = this.Product.Image;
 
-            if (this.Product.HasSpecialPrice == 1)
-            {
-                this.Price = this.Product.SalePrice - (this.Product.SalePrice * this.Product.SpecialPrice / 100);
-            } else
-            {
-                this.Price = this.Product.SalePrice;
-            }
-            this.HasSpecialPrice = this.Product.HasSpecialPrice;
-
-            if (this.Product.Image.Contains("https://thenuap.com/"))
+            if (this.Image.Contains("https"))
             {
                 this.Image = this.Product.Image;
             } else
             {
                 this.Image = "https://thenuap.com/" + this.Product.Image;
             }
-            
+
+            if (this.Product.HasSpecialPrice == 1)
+            {
+                this.Price = this.Product.SalePrice - (this.Product.SalePrice * this.Product.SpecialPrice / 100);
+            }
+            else
+            {
+                this.Price = this.Product.SalePrice;
+            }
+            this.HasSpecialPrice = this.Product.HasSpecialPrice;
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

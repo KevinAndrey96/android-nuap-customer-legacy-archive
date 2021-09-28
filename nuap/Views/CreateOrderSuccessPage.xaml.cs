@@ -4,9 +4,9 @@
     using Xamarin.Forms.Xaml;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomeCommerceTabbedPage : TabbedPage
+    public partial class CreateOrderSuccessPage : ContentPage
     {
-        public HomeCommerceTabbedPage()
+        public CreateOrderSuccessPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);

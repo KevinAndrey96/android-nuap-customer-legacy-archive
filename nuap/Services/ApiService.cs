@@ -73,10 +73,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/ticket/"+ticketId+"/messages");
+                var response = await client.GetAsync("/api/users/ticket/"+ticketId+ "/messages?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<TicketMessageResponse>(resultJSON);
       
@@ -96,10 +94,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/ticket");
+                var response = await client.GetAsync("/api/users/ticket?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<TicketResponse>(resultJSON);
 
@@ -121,13 +117,42 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/users/ticket/reply",
-                    new StringContent(string.Format(
+                var response = await client.PostAsync("/api/users/ticket/reply?api_token=" + accessToken,
+                new StringContent(string.Format(
                     "ticket_id={0}&message={1}",
                     ticketID, message),
+                    Encoding.UTF8, "application/x-www-form-urlencoded"));
+                var resultJSON = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ReplyTicketResponse>(resultJSON);
+
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<ReplyTicketResponse> CreateAddress(
+           string accessToken,
+           string urlBase,
+           string city,
+           string location,
+           string neighborhood,
+           string address,
+           string latitude,
+           string longitude
+        )
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var response = await client.PostAsync("/api/users/location/create?api_token=" + accessToken,
+                new StringContent(string.Format(
+                    "city={0}&location={1}&neighborhood={2}&address={3}&latitude={4}&longitude={5}",
+                    city, location, neighborhood, address, latitude, longitude),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ReplyTicketResponse>(resultJSON);
@@ -150,11 +175,9 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/users/ticket/create",
-                    new StringContent(string.Format(
+                var response = await client.PostAsync("/api/users/ticket/create?api_token=" + accessToken,
+                new StringContent(string.Format(
                     "issues={0}&message={1}",
                     issues, message),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
@@ -177,10 +200,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/profile");
+                var response = await client.GetAsync("/api/users/profile?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProfileUserResponse>(resultJSON);
 
@@ -203,11 +224,9 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/users/profile/edit",
-                    new StringContent(string.Format(
+                var response = await client.PostAsync("/api/users/profile/edit?api_token=" + accessToken,
+                new StringContent(string.Format(
                     "name={0}&email={1}&phone={2}",
                     name, email, phone),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
@@ -230,10 +249,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/commerces/profile");
+                var response = await client.GetAsync("/api/commerces/profile?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProfileCommerceResponse>(resultJSON);
 
@@ -253,10 +270,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/categories");
+                var response = await client.GetAsync("/api/products/categories?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<CategoryResponse>(resultJSON);
 
@@ -277,10 +292,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/category/"+categoryID);
+                var response = await client.GetAsync("/api/products/category/"+categoryID+"?api_token = "+accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProductResponse>(resultJSON);
 
@@ -300,10 +313,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/orders");
+                var response = await client.GetAsync("/api/users/orders?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<OrderResponse>(resultJSON);
 
@@ -338,11 +349,9 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/products/commerce/create",
-                    new StringContent(string.Format(
+                var response = await client.PostAsync("/api/products/commerce/create?api_token=" + accessToken,
+                new StringContent(string.Format(
                     "category_id={0}&name={1}&sku={2}&brand={3}&description={4}&is_featured={5}&stock={6}&weight={7}&length={8}&width={9}&height={10}&purchase_price={11}&sale_price={12}&special_price={13}&has_special_price={14}",
                     categoryID, name, sku, brand, description, isFeatured, stock, weight, length, width, height, purchasePrice, salePrice, specialPrice, hasSpecialPrice),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
@@ -381,11 +390,9 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/products/commerce/create",
-                    new StringContent(string.Format(
+                var response = await client.PostAsync("/api/products/commerce/create?api_token=" + accessToken,
+                new StringContent(string.Format(
                     "has_special_price={0}&category_id={1}&name={2}&sku={3}&brand={4}&description={5}&is_featured={6}&stock={7}&weight={8}&length={9}&width={10}&height={11}&purchase_price={12}&sale_price={13}&special_price={14}&product_id={15}",
                     hasSpecialPrice, categoryID, name, sku, brand, description, isFeatured, stock, weight, length, width, height, purchasePrice, salePrice, specialPrice, productID),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
@@ -409,10 +416,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/orders/" + orderId + "/products");
+                var response = await client.GetAsync("/api/users/orders/" + orderId + "/products?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<OrderProductResponse>(resultJSON);
 
@@ -433,10 +438,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/seller/"+sellerID+ "/info");
+                var response = await client.GetAsync("/api/users/seller/"+sellerID+ "/info?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProfileCommerceResponse>(resultJSON);
 
@@ -459,11 +462,9 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/users/rating",
-                    new StringContent(string.Format(
+                var response = await client.PostAsync("/api/users/rating?api_token=" + accessToken,
+                new StringContent(string.Format(
                     "order_id={0}&rating={1}&comment={2}",
                     orderID, rating, comment),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
@@ -486,10 +487,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/commerces/sales");
+                var response = await client.GetAsync("/api/commerces/sales?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<OrderResponse>(resultJSON);
 
@@ -510,10 +509,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/commerces/order/" + orderID+"/update");
+                var response = await client.GetAsync("/api/commerces/order/" + orderID+ "/update?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ReplyTicketResponse>(resultJSON);
 
@@ -533,10 +530,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/users/location");
+                var response = await client.GetAsync("/api/users/location?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<AddressResponse>(resultJSON);
 
@@ -556,10 +551,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/valid/categories");
+                var response = await client.GetAsync("/api/products/valid/categories?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<CategoryResponse>(resultJSON);
 
@@ -580,10 +573,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/stores/address/"+address);
+                var response = await client.GetAsync("/api/products/stores/address/"+address+"?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<StoreProductResponse>(resultJSON);
 
@@ -604,10 +595,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/sales/address/" + address);
+                var response = await client.GetAsync("/api/products/sales/address/" + address+ "?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProductResponse>(resultJSON);
 
@@ -628,10 +617,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/featured/address/" + address);
+                var response = await client.GetAsync("/api/products/featured/address/" + address + "?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProductResponse>(resultJSON);
 
@@ -653,10 +640,8 @@
             try
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/category/"+category+"/address/" + address);
+                var response = await client.GetAsync("/api/products/category/"+category+"/address/" + address + "?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProductResponse>(resultJSON);
 
@@ -711,10 +696,8 @@
                     request, Encoding.UTF8,
                     "application/json");
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/products/calculate-delivery", content);
+                var response = await client.PostAsync("/api/products/calculate-delivery?api_token=" + accessToken, content);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<CalculateDeliveryResponse>(resultJSON);
 
@@ -740,10 +723,8 @@
                     request, Encoding.UTF8,
                     "application/json");
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("/api/products/create-order/address/" + address, content);
+                var response = await client.PostAsync("/api/products/create-order/address/" + address + "?api_token=" + accessToken, content);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<CreateOrderResponse>(resultJSON);
 
@@ -797,6 +778,28 @@
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<LoginResponse>(resultJSON);
+
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<ReplyTicketResponse> DeleteLocation(
+            string accessToken,
+            string urlBase,
+            int addressID
+        )
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var response = await client.GetAsync("/api/users/location/" + addressID + "/delete?api_token=" + accessToken);
+                var resultJSON = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ReplyTicketResponse>(resultJSON);
 
                 return result;
             }

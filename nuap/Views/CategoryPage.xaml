@@ -8,13 +8,26 @@
         <StackLayout
             BindingContext="{Binding AllCategories}"
             Padding="0,15,0,0">
+            <StackLayout
+                Orientation="Horizontal">
+                <Image
+                    WidthRequest="30"
+                    Margin="20,0,0,0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start"
+                    Source="flecha">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReturnCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
             <Image
-                Source="usuario01"
+                Source="banners02"
                 HorizontalOptions="FillAndExpand"
                 HeightRequest="165">
             </Image>
             <StackLayout
-                Margin="20,15,20,0">
+                Margin="20,22,20,0">
                 <Frame
                     BorderColor="#e2e2e2"
                     CornerRadius="20"
@@ -32,23 +45,15 @@
                     </SearchBar>
                 </Frame>
             </StackLayout>
-            <Label
-                Text="Categorias"
-                Padding="20,15,0,0"
-                TextColor="White" 
-                FontFamily="Poppins-Bold"
-                FontSize="18"
-                VerticalOptions="Center">
-            </Label>
             <StackLayout
-                Padding="0,15,0,0">
+                Padding="20,15,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <StackLayout 
-                        Padding="5,0,5,0"
+                        Padding="0,0,5,0"
                         Grid.Column="0"
                         HorizontalOptions="Start"
                         VerticalOptions="Center">
@@ -72,14 +77,15 @@
                                                     <TapGestureRecognizer Command="{Binding GetCategoryProductsCommand}"/>
                                                 </Frame.GestureRecognizers>
                                                 <Image 
-                                                    HeightRequest="120"
-                                                    WidthRequest="120"
+                                                    HeightRequest="100"
+                                                    WidthRequest="100"
                                                     Source="{Binding Image}" 
                                                     HorizontalOptions="CenterAndExpand"
                                                     VerticalOptions="CenterAndExpand">
                                                 </Image>
                                             </Frame>
                                             <Label 
+                                                HorizontalTextAlignment="Center"
                                                 VerticalOptions="Center"
                                                 HorizontalOptions="Center"
                                                 FontFamily="Poppins-Bold"
@@ -94,7 +100,7 @@
                         </ListView>
                     </StackLayout>
                     <StackLayout 
-                        Padding="20,0,5,0"
+                        Padding="0,0,5,0"
                         Grid.Column="1"
                         HorizontalOptions="Start"
                         VerticalOptions="Center">
@@ -117,14 +123,15 @@
                                                     <TapGestureRecognizer Command="{Binding GetCategoryProductsCommand}"/>
                                                 </Frame.GestureRecognizers>
                                                 <Image 
-                                                    HeightRequest="120"
-                                                    WidthRequest="120"
+                                                    HeightRequest="100"
+                                                    WidthRequest="100"
                                                     Source="{Binding Image}" 
                                                     HorizontalOptions="CenterAndExpand"
                                                     VerticalOptions="CenterAndExpand">
                                                 </Image>
                                             </Frame>
                                             <Label 
+                                                HorizontalTextAlignment="Center"
                                                 VerticalOptions="Center"
                                                 HorizontalOptions="Center"
                                                 FontFamily="Poppins-Bold"

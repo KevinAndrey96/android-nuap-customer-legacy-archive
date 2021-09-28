@@ -99,16 +99,16 @@
                             Text="¿Aún no tienes cuenta?"
                             FontFamily="Poppins-Bold"
                             TextColor="Gray"
-                            FontSize="16"
+                            FontSize="15"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
                             Padding="0,20">
                         </Label>
                         <Label
-                            Text="Registrate"
+                            Text="Regístrate"
                             FontFamily="Poppins-Bold"
                             TextColor="#0274bc"
-                            FontSize="16"
+                            FontSize="15"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
                             Padding="0,20">
@@ -118,7 +118,7 @@
                         </Label>
                     </StackLayout>
                     <Label
-                        Text="Version: 0.4"
+                        Text="Version: 0.7"
                         FontFamily="Poppins"
                         TextColor="#949494"
                         FontSize="12"

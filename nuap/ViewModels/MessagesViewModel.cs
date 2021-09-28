@@ -56,6 +56,14 @@
             }
         }
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         public MessagesViewModel(Ticket ticket)
         {
             this.Ticket = ticket;
@@ -99,13 +107,13 @@
             {
                 this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
             }
 
-            var list = (List<Message>)response.Data;
+            var list = response.Data;
             List<Message> newList = new List<Message>();
 
             foreach (var item in list)
@@ -174,7 +182,7 @@
                 this.Message = "";
 
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
@@ -182,6 +190,12 @@
 
             this.Message = "";
             this.LoadMessages();
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

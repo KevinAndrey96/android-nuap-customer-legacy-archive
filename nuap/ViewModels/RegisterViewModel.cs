@@ -97,7 +97,7 @@
             {
                 await Application.Current.MainPage.DisplayAlert(
                         "Error",
-                        "Debes ingrsar tu nombre",
+                        "Debes ingresar tu nombre",
                         "Aceptar"
                     );
                 return;
@@ -107,7 +107,7 @@
             {
                 await Application.Current.MainPage.DisplayAlert(
                         "Error",
-                        "Debes ingrsar tu apellido",
+                        "Debes ingresar tu apellido",
                         "Aceptar"
                     );
                 return;
@@ -164,7 +164,7 @@
             }
 
             this.IsRunning = true;
-            this.IsEnabled = false;
+            //this.IsEnabled = false;
 
             var connection = await this.apiService.CheckConnection();
             if (!connection.IsSuccess)
@@ -203,7 +203,7 @@
             if (response.Errors != null)
             {
                  await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;

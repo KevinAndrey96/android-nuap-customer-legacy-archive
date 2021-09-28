@@ -8,7 +8,6 @@
     using System.Linq;
     using Xamarin.Forms;
     using Models;
-    using Views;
 
     public class CategoryProductViewModel: BaseViewModel
     {
@@ -47,7 +46,6 @@
             set
             {
                 SetValue(ref this.filter, value);
-                //this.Search();
             }
         }
 
@@ -155,6 +153,14 @@
             }
         }
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         public CategoryProductViewModel(Category category)
         {
             this.Category = category;
@@ -183,7 +189,7 @@
                 mainViewModel.User.api_token,
                 "https://thenuap.com",
                 this.Category.Id,
-                19);
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
@@ -199,7 +205,7 @@
             {
                 this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
+                    "Información",
                     response.Errors.First().Detail,
                     "Aceptar");
                 return;
@@ -300,8 +306,16 @@
                 Image = "https://thenuap.com/" + p.Image,
                 Position = p.Position,
                 StatusText = p.StatusText,
-                StatusColor = p.StatusColor
+                StatusColor = p.StatusColor,
+                FormatSalePrice = p.FormatSalePrice,
+                TotalPrice = p.TotalPrice
             });
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

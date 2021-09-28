@@ -15,29 +15,37 @@
         {
             InitializeComponent();
 
+            var mainViewModel = MainViewModel.GetInstance();
             if (string.IsNullOrEmpty(Settings.Token))
             {
                 MainPage = new NavigationPage(new LoginPage());
-            } else
+            }
+            else
             {
-                var mainViewModel = MainViewModel.GetInstance();
-
                 User Usuario = new User();
                 Usuario.api_token = Settings.Token;
                 Usuario.role = Settings.UserType;
                 Usuario.phone = Settings.Phone;
                 Usuario.email = Settings.Email;
+                Usuario.balance = Settings.Balance;
                 Usuario.id = Int32.Parse(Settings.Id);
 
                 mainViewModel.User = Usuario;
 
-                if (! string.IsNullOrEmpty(Settings.CartList))
+                if (!string.IsNullOrEmpty(Settings.CartList))
                 {
                     mainViewModel.CartList = JsonConvert.DeserializeObject<List<Cart>>(Settings.CartList);
                 }
 
+                if (!string.IsNullOrEmpty(Settings.AddressDetail))
+                {
+                    mainViewModel.AddressDetail = JsonConvert.DeserializeObject<Address>(Settings.AddressDetail);
+                }
+
+                MainPage = new NavigationPage(new LoginPage());
+
                 mainViewModel.Home = new HomeViewModel();
-                MainPage = new NavigationPage(new HomeTabbedPage());
+                Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
             }
         }
 

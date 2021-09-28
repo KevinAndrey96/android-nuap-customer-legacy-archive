@@ -16,7 +16,13 @@
         [JsonProperty(PropertyName = "price")]
         public double Price { get; set; }
 
+        [JsonProperty(PropertyName = "total_price")]
+        public string TotalPrice { get; set; }
+
         [JsonProperty(PropertyName = "image")]
         public string Image { get; set; }
+
+        [JsonProperty(PropertyName = "stock")]
+        public int Stock { get; set; }
     }
 }

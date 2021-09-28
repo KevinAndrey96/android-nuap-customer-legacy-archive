@@ -5,7 +5,43 @@
 
     public class MainViewModel
     {
+        public StoreViewModel Store
+        {
+            get;
+            set;
+        }
+
         public LoginViewModel Login
+        {
+            get;
+            set;
+        }
+
+        public AddAndRemoveProductsViewModel AddAndRemoveProductsPopup
+        {
+            get;
+            set;
+        }
+
+        public CreateOrderSuccessViewModel CreateOrderSuccess
+        {
+            get;
+            set;
+        }
+
+        public CreateOrderViewModel CreateOrder
+        {
+            get;
+            set;
+        }
+
+        public string UserName
+        {
+            get;
+            set;
+        }
+
+        public Category CategoryID
         {
             get;
             set;
@@ -17,13 +53,19 @@
             set;
         }
 
-        public HomeCommerceViewModel HomeCommerce
+        public SupportViewModel Support
         {
             get;
             set;
         }
 
-        public SupportViewModel Support
+        public Address AddressDetail
+        {
+            get;
+            set;
+        }
+
+        public SelectAddressViewModel SelectAddress
         {
             get;
             set;
@@ -48,30 +90,6 @@
         }
 
         public CommerceProfileViewModel CommerceProfile
-        {
-            get;
-            set;
-        }
-
-        public InventoryViewModel Inventory
-        {
-            get;
-            set;
-        }
-
-        public ProductCommerceViewModel ProductCommerce
-        {
-            get;
-            set;
-        }
-
-        public CreateProductViewModel CreateProduct
-        {
-            get;
-            set;
-        }
-
-        public EditProductViewModel EditProduct
         {
             get;
             set;
