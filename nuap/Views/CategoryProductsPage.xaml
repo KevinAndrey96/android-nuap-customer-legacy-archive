@@ -95,9 +95,10 @@
                                                 HorizontalOptions="EndAndExpand"
                                                 VerticalOptions="Center">
                                                 <Label 
+                                                    LineBreakMode="TailTruncation"
                                                     VerticalOptions="Center"
                                                     FontFamily="Poppins-Bold"
-                                                    FontSize="17" 
+                                                    FontSize="14" 
                                                     Text="{Binding Name}"
                                                     TextColor="#3a3a3a">
                                                 </Label>
@@ -106,7 +107,7 @@
                                                     <Label 
                                                         VerticalOptions="Center"
                                                         FontFamily="Poppins-Bold"
-                                                        FontSize="18" 
+                                                        FontSize="16" 
                                                         Text="{Binding FormatSalePrice}"
                                                         TextColor="#0274bc">
                                                     </Label>
@@ -169,9 +170,10 @@
                                                 HorizontalOptions="EndAndExpand"
                                                 VerticalOptions="Center">
                                                 <Label 
+                                                    LineBreakMode="TailTruncation"
                                                     VerticalOptions="Center"
                                                     FontFamily="Poppins-Bold"
-                                                    FontSize="17" 
+                                                    FontSize="14" 
                                                     Text="{Binding Name}"
                                                     TextColor="#3a3a3a">
                                                 </Label>
@@ -181,14 +183,14 @@
                                                         VerticalOptions="Center"
                                                         FontFamily="Poppins-Bold"
                                                         TextDecorations="Strikethrough"
-                                                        FontSize="15" 
+                                                        FontSize="13" 
                                                         Text="{Binding FormatSalePrice}"
                                                         TextColor="#c4c4c4">
                                                     </Label>
                                                     <Label 
                                                         VerticalOptions="Center"
                                                         FontFamily="Poppins-Bold"
-                                                        FontSize="18" 
+                                                        FontSize="16" 
                                                         Text="{Binding TotalPrice}"
                                                         TextColor="#0274bc">
                                                     </Label>
@@ -251,9 +253,10 @@
                                                 HorizontalOptions="EndAndExpand"
                                                 VerticalOptions="Center">
                                                 <Label 
+                                                    LineBreakMode="TailTruncation"
                                                     VerticalOptions="Center"
                                                     FontFamily="Poppins-Bold"
-                                                    FontSize="17" 
+                                                    FontSize="14" 
                                                     Text="{Binding Name}"
                                                     TextColor="#3a3a3a">
                                                 </Label>
@@ -262,14 +265,7 @@
                                                     <Label 
                                                         VerticalOptions="Center"
                                                         FontFamily="Poppins-Bold"
-                                                        FontSize="18" 
-                                                        Text="$"
-                                                        TextColor="#0274bc">
-                                                    </Label>
-                                                    <Label 
-                                                        VerticalOptions="Center"
-                                                        FontFamily="Poppins-Bold"
-                                                        FontSize="18" 
+                                                        FontSize="16" 
                                                         Text="{Binding FormatSalePrice}"
                                                         TextColor="#0274bc">
                                                     </Label>
@@ -332,9 +328,10 @@
                                                 HorizontalOptions="EndAndExpand"
                                                 VerticalOptions="Center">
                                                 <Label 
+                                                    LineBreakMode="TailTruncation"
                                                     VerticalOptions="Center"
                                                     FontFamily="Poppins-Bold"
-                                                    FontSize="17" 
+                                                    FontSize="14" 
                                                     Text="{Binding Name}"
                                                     TextColor="#3a3a3a">
                                                 </Label>
@@ -343,14 +340,7 @@
                                                     <Label 
                                                         VerticalOptions="Center"
                                                         FontFamily="Poppins-Bold"
-                                                        FontSize="18" 
-                                                        Text="$"
-                                                        TextColor="#0274bc">
-                                                    </Label>
-                                                    <Label 
-                                                        VerticalOptions="Center"
-                                                        FontFamily="Poppins-Bold"
-                                                        FontSize="18" 
+                                                        FontSize="16" 
                                                         Text="{Binding FormatSalePrice}"
                                                         TextColor="#0274bc">
                                                     </Label>

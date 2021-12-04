@@ -925,6 +925,14 @@
             }
         }
 
+        public ICommand GetAddressCommand
+        {
+            get
+            {
+                return new RelayCommand(GetAddress);
+            }
+        }
+
         public ICommand SalesCommand
         {
             get
@@ -1272,7 +1280,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
@@ -1328,7 +1337,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
@@ -1385,7 +1395,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
@@ -1442,7 +1453,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
@@ -1499,7 +1511,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
@@ -2029,6 +2042,13 @@
             await Application.Current.MainPage.Navigation.PushAsync(new OrdersPage());
         }
 
+        private async void GetAddress()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Address = new AddressViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new AddressPage());
+        }
+
         private async void Sales()
         {
             var mainViewModel = MainViewModel.GetInstance();
@@ -2161,7 +2181,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {

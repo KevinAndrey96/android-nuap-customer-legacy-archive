@@ -129,7 +129,8 @@
 
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
-                "https://thenuap.com");
+                "https://thenuap.com",
+                mainViewModel.AddressDetail.Id);
 
             if (response == null)
             {
