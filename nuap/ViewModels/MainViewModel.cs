@@ -17,6 +17,18 @@
             set;
         }
 
+        public TermsAndConditionsViewModel TermsAndConditionsPopup
+        {
+            get;
+            set;
+        }
+
+        public ChangePasswordViewModel ChangePassword
+        {
+            get;
+            set;
+        }
+
         public AddAndRemoveProductsViewModel AddAndRemoveProductsPopup
         {
             get;

@@ -7,7 +7,6 @@
     using Models;
     using Plugin.Connectivity;
     using System.Text;
-    using System.Net.Http.Headers;
 
     public class ApiService
     {

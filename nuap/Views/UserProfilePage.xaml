@@ -136,6 +136,23 @@
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
                     </Button>
                 </StackLayout>
+                <StackLayout
+                    Padding="40,10,40,0">
+                    <Button
+                        Text="Cambiar contraseña"
+                        FontFamily="Poppins"
+                        TextTransform="None"
+                        BackgroundColor="#ffc33a"
+                        HeightRequest="50"
+                        TextColor="White"
+                        BorderRadius="25"
+                        Padding="0,15"
+                        FontSize="16"
+                        VerticalOptions="End"
+                        Command="{Binding ChangePasswordCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+                    </Button>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

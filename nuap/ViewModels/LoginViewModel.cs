@@ -7,6 +7,7 @@
     using Views;
     using Services;
     using Helpers;
+    using Rg.Plugins.Popup.Services;
 
     public class LoginViewModel : BaseViewModel
     {
@@ -59,6 +60,22 @@
             get
             {
                 return new RelayCommand(Register);
+            }
+        }
+
+        public ICommand TermsAndConditionsCommand
+        {
+            get
+            {
+                return new RelayCommand(TermsAndConditions);
+            }
+        }
+
+        public ICommand ChangePasswordCommand
+        {
+            get
+            {
+                return new RelayCommand(ChangePassword);
             }
         }
 
@@ -168,6 +185,20 @@
                 mainViewModel.Home = new HomeViewModel();
                 await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
             }
+        }
+
+        private async void TermsAndConditions()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.TermsAndConditionsPopup = new TermsAndConditionsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new TermsAndConditionsPage());
+        }
+
+        private async void ChangePassword()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.ChangePassword = new ChangePasswordViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new ChangePasswordPage());
         }
     }
 }

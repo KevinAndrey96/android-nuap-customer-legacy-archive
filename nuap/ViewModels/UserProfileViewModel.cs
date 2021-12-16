@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Windows.Input;
     using Xamarin.Forms;
+    using Views;
 
     public class UserProfileViewModel: BaseViewModel
     {
@@ -14,7 +15,6 @@
         private string phone;
         private string name;
         private bool isEnabled;
-
 
         public string Email
         {
@@ -44,6 +44,14 @@
             this.apiService = new ApiService();
             this.GetUserProfile();
             this.IsEnabled = true;
+        }
+
+        public ICommand ChangePasswordCommand
+        {
+            get
+            {
+                return new RelayCommand(ChangePassword);
+            }
         }
 
         public ICommand UpdateProfileCommand
@@ -191,6 +199,13 @@
         {
             var mainViewModel = MainViewModel.GetInstance();
             await Application.Current.MainPage.Navigation.PopAsync();
+        }
+
+        private async void ChangePassword()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.ChangePassword = new ChangePasswordViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new ChangePasswordPage());
         }
     }
 }

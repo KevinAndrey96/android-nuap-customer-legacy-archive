@@ -4,8 +4,6 @@
     using Models;
     using Services;
     using Xamarin.Forms;
-    using System.Linq;
-    using System.Collections.Generic;
 
     public class SupportViewModel : BaseViewModel
     {
