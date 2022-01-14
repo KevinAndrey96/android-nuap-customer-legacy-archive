@@ -27,6 +27,14 @@
         private bool isRefreshing;
         private string filter;
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         public string Filter
         {
             get { return this.filter; }
@@ -230,6 +238,12 @@
                 Description = c.Description,
                 Image = "https://thenuap.com/" + c.Image
             });
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

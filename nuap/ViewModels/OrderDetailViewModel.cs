@@ -122,6 +122,14 @@
             }
         }
 
+        public ICommand ReturnCommand
+        {
+            get
+            {
+                return new RelayCommand(Return);
+            }
+        }
+
         private async void ViewSeller()
         {
             var mainViewModel = MainViewModel.GetInstance();
@@ -219,6 +227,12 @@
 
             this.Products = new ObservableCollection<Product>(newList);
             this.IsRefreshing = false;
+        }
+
+        private async void Return()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

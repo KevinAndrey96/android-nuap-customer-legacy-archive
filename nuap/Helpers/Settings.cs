@@ -20,6 +20,7 @@
         const string email = "Email";
         const string cartList = "CartList";
         const string addressDetail = "AddressDetail";
+        const string addressDefaultDetail = "AddressDefaultDetail";
         const string balance = "Balance";
         const string addressID = "AddressID";
         const string addressNeigborhood = "AddressNeighborhood";
@@ -131,6 +132,18 @@
             set
             {
                 AppSettings.AddOrUpdateValue(addressDetail, value);
+            }
+        }
+
+        public static string AddressDefaultDetail
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(addressDefaultDetail, stringDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(addressDefaultDetail, value);
             }
         }
 

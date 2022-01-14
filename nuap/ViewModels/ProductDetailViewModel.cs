@@ -231,69 +231,83 @@
 
         private async void AddCart()
         {
-            if (this.Quantity == 0)
-            {
-                await Application.Current.MainPage.DisplayAlert(
-                    "",
-                    "No puedes agregar 0 productos al carrito",
-                    "Aceptar");
-                return;
-            }
-
-            Cart cart = new Cart();
-            cart.Id = this.Product.Id;
-            cart.Quantity = this.Quantity;
-            cart.Image = this.Image;
-            cart.Price = this.Price;
-            cart.Name = this.Name;
-            cart.TotalPrice = this.TotalPrice;
-            cart.Stock = this.Product.Stock;
-
             var mainViewModel = MainViewModel.GetInstance();
-            if (mainViewModel.CartList == null)
+            if (mainViewModel.User.id == 93)
             {
-                mainViewModel.CartList = new List<Cart>();
-                mainViewModel.CartList.Add(cart);
                 await Application.Current.MainPage.DisplayAlert(
-                    "",
-                    "Hemos agregado este producto a tu carrito",
-                    "Aceptar");
+                        "",
+                        "Debes iniciar sesión para poder continuar",
+                        "Aceptar");
 
-                Settings.CartList = JsonConvert.SerializeObject(mainViewModel.CartList);
-                mainViewModel.Cart = new CartViewModel();
-
+                mainViewModel.Login = new LoginViewModel();
                 await Application.Current.MainPage.Navigation.PopAsync();
-                await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
+                await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
             }
             else
             {
-                List<Cart> cartList = new List<Cart>();
-                foreach (var item in mainViewModel.CartList)
+                if (this.Quantity == 0)
                 {
-                    if (item.Id != cart.Id)
-                    {
-                        cartList.Add(item);
-                        continue;
-                    }
-                    else
-                    {
-                        cart.Quantity = cart.Quantity + item.Quantity;
-                    }
+                    await Application.Current.MainPage.DisplayAlert(
+                        "",
+                        "No puedes agregar 0 productos al carrito",
+                        "Aceptar");
+                    return;
                 }
 
-                cartList.Add(cart);
-                mainViewModel.CartList = new List<Cart>();
-                mainViewModel.CartList = cartList;
-                Settings.CartList = JsonConvert.SerializeObject(mainViewModel.CartList);
-                await Application.Current.MainPage.DisplayAlert(
-                    "",
-                    "Hemos agregado este producto a tu carrito",
-                    "Aceptar");
+                Cart cart = new Cart();
+                cart.Id = this.Product.Id;
+                cart.Quantity = this.Quantity;
+                cart.Image = this.Image;
+                cart.Price = this.Price;
+                cart.Name = this.Name;
+                cart.TotalPrice = this.TotalPrice;
+                cart.Stock = this.Product.Stock;
 
-                mainViewModel.Cart = new CartViewModel();
+                if (mainViewModel.CartList == null)
+                {
+                    mainViewModel.CartList = new List<Cart>();
+                    mainViewModel.CartList.Add(cart);
+                    await Application.Current.MainPage.DisplayAlert(
+                        "",
+                        "Hemos agregado este producto a tu carrito",
+                        "Aceptar");
 
-                await Application.Current.MainPage.Navigation.PopAsync();
-                await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
+                    Settings.CartList = JsonConvert.SerializeObject(mainViewModel.CartList);
+                    mainViewModel.Cart = new CartViewModel();
+
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                    await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
+                }
+                else
+                {
+                    List<Cart> cartList = new List<Cart>();
+                    foreach (var item in mainViewModel.CartList)
+                    {
+                        if (item.Id != cart.Id)
+                        {
+                            cartList.Add(item);
+                            continue;
+                        }
+                        else
+                        {
+                            cart.Quantity = cart.Quantity + item.Quantity;
+                        }
+                    }
+
+                    cartList.Add(cart);
+                    mainViewModel.CartList = new List<Cart>();
+                    mainViewModel.CartList = cartList;
+                    Settings.CartList = JsonConvert.SerializeObject(mainViewModel.CartList);
+                    await Application.Current.MainPage.DisplayAlert(
+                        "",
+                        "Hemos agregado este producto a tu carrito",
+                        "Aceptar");
+
+                    mainViewModel.Cart = new CartViewModel();
+
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                    await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
+                }
             }
         }
 

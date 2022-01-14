@@ -30,8 +30,18 @@
         private async void InitPage()
         {
             var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.Home = new HomeViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+            if (mainViewModel.User.id == 93)
+            {
+                mainViewModel.HomeDefault = new HomeDefaultViewModel();
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new DefaultInitPage());
+            }
+            else
+            {
+                mainViewModel.Home = new HomeViewModel();
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+            }
         }
 
         private async void Return()

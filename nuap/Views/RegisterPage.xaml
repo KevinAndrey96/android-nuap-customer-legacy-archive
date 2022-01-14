@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="nuap.Views.RegisterPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             BackgroundImageSource="register.png">
+             BackgroundImageSource="CategoriaProductos.png">
     <ContentPage.Content>
         <StackLayout
             Padding="15,10,20,0"
             BindingContext="{Binding Register}">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS">15,40,20,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
             <Label
                 Padding="0,0,0,0"
                 Text="Hola, te damos la bienvenida"

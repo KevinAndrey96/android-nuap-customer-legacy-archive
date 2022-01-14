@@ -7,6 +7,9 @@
     using Views;
     using Services;
     using Helpers;
+    using nuap.Models;
+    using System;
+    using Newtonsoft.Json;
 
     public class LoginViewModel : BaseViewModel
     {
@@ -62,6 +65,14 @@
             }
         }
 
+        public ICommand SelectAddressCommand
+        {
+            get
+            {
+                return new RelayCommand(SelectAddress);
+            }
+        }
+
         private void checkLogin()
         {
             this.apiService = new ApiService();
@@ -73,7 +84,35 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Register = new RegisterViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
-        } 
+        }
+
+        private async void SelectAddress()
+        {
+            User Usuario = new User();
+            Usuario.api_token = "***REMOVED***";
+            Usuario.role = "Usuario";
+            Usuario.phone = "3333333333";
+            Usuario.email = "default-user@nuap.com";
+            Usuario.balance = "$ 0";
+            Usuario.id = 93;
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.User = Usuario;
+
+            if (Settings.AddressDefaultDetail != "")
+            {
+                Address AddressData = JsonConvert.DeserializeObject<Address>(Settings.AddressDefaultDetail);
+                mainViewModel.AddressDetail = AddressData;
+
+                mainViewModel.HomeDefault = new HomeDefaultViewModel();
+                await Application.Current.MainPage.Navigation.PushAsync(new DefaultInitPage());
+            }
+            else
+            {
+                mainViewModel.CreateAddress = new CreateAddressViewModel();
+                await Application.Current.MainPage.Navigation.PushAsync(new CreateAddressPage());
+            }
+        }
 
         private async void Login()
         {

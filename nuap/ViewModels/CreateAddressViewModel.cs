@@ -227,12 +227,21 @@
 
             var list = responseAddress.Data;
             mainViewModel.AddressDetail = list[0];
-            Settings.AddressDetail = JsonConvert.SerializeObject(mainViewModel.AddressDetail);
+            Settings.AddressDetail = JsonConvert.SerializeObject(mainViewModel.AddressDetail); 
 
+            if (mainViewModel.User.id == 93)
+            {
+                Settings.AddressDefaultDetail = JsonConvert.SerializeObject(mainViewModel.AddressDetail);
 
-            mainViewModel.Home = new HomeViewModel();
-            await Application.Current.MainPage.Navigation.PopAsync();
-            await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+                mainViewModel.HomeDefault = new HomeDefaultViewModel();
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new DefaultInitPage());
+            } else
+            {
+                mainViewModel.Home = new HomeViewModel();
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PushAsync(new HomeTabbedPage());
+            }
         }
 
         private async void Return()

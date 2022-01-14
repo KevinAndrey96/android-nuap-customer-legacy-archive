@@ -8,6 +8,11 @@
             BackgroundColor="White"
             BindingContext="{Binding Cart}"
             Padding="5,0,0,0">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS">5,22,0,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
             <StackLayout
                 Orientation="Horizontal">
                 <Image
@@ -229,15 +234,17 @@
                     HeightRequest="50"
                     TextColor="White"
                     BorderRadius="18"
-                    Padding="0,15"
+                    Padding="20,0,20,0"
                     FontSize="15"
                     Command="{Binding ChoosePaymentMethodCommand}"
                     IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
                 </Button>
             </StackLayout>
             <StackLayout
+                Margin="0,0,0,0"
                 Orientation="Horizontal">
                 <Button
+                    Padding="10,0,10,0"
                     Margin="0,0,0,10"
                     VerticalOptions="CenterAndExpand"
                     HorizontalOptions="CenterAndExpand"
@@ -253,6 +260,7 @@
                     IsEnabled="{Binding IsEnabledProducts, Mode=TwoWay}">
                 </Button>
                 <Button
+                    Padding="10,0,10,0"
                     Margin="0,0,0,10"
                     VerticalOptions="CenterAndExpand"
                     HorizontalOptions="CenterAndExpand"

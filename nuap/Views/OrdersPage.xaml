@@ -9,6 +9,11 @@
         <StackLayout
             BindingContext="{Binding Orders}"
             Padding="5,0,0,0">
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS">0,20,0,0</On>
+                </OnPlatform>
+            </StackLayout.Padding>
             <Image
                 WidthRequest="30"
                 Margin="15,20,0,10"

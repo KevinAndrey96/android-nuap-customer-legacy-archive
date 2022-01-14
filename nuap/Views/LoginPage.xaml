@@ -92,6 +92,19 @@
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
                     </Button>
+                    <Button
+                        Text="Continua sin Registrarte"
+                        FontFamily="Poppins"
+                        TextTransform="None"
+                        BackgroundColor="#ffc33a"
+                        HeightRequest="60"
+                        TextColor="White"
+                        BorderRadius="20"
+                        Padding="0,15"
+                        FontSize="17"
+                        Command="{Binding SelectAddressCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+                    </Button>
                     <StackLayout
                         Orientation="Horizontal"
                         HorizontalOptions="Center">

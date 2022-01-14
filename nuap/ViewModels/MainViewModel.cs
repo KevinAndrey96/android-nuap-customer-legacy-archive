@@ -5,6 +5,12 @@
 
     public class MainViewModel
     {
+        public HomeDefaultViewModel HomeDefault
+        {
+            get;
+            set;
+        }
+
         public StoreViewModel Store
         {
             get;
