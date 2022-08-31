@@ -1891,7 +1891,7 @@
             this.DisabledButtons();
             var mainViewModel = MainViewModel.GetInstance();
 
-            var response = await this.apiService.GetSales(
+            var response = await this.apiService.GetProductSales(
                 mainViewModel.User.api_token,
                 "https://thenuap.com",
                 mainViewModel.AddressDetail.Id);
@@ -2348,8 +2348,7 @@
 
             var response = await this.apiService.GetSales(
                 mainViewModel.User.api_token,
-                "https://thenuap.com",
-                mainViewModel.AddressDetail.Id);
+                "https://thenuap.com");
 
             if (response == null)
             {
@@ -2443,7 +2442,7 @@
             this.IsRefreshingInit = true;
             var mainViewModel = MainViewModel.GetInstance();
 
-            var response = await this.apiService.GetSales(
+            var response = await this.apiService.GetFeatured(
                 mainViewModel.User.api_token,
                 "https://thenuap.com",
                 mainViewModel.AddressDetail.Id);

@@ -586,7 +586,7 @@
             }
         }
 
-        public async Task<ProductResponse> GetSales(
+        public async Task<ProductResponse> GetProductSales(
             string accessToken,
             string urlBase,
             int address
@@ -595,8 +595,9 @@
             try
             {
                 var client = new HttpClient();
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.GetAsync("/api/products/sales/address/" + address+ "?api_token=" + accessToken);
+                var response = await client.GetAsync("/api/products/sales/address/" + address + "?api_token=" + accessToken);
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ProductResponse>(resultJSON);
 
