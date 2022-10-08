@@ -53,6 +53,12 @@
             set;
         }
 
+        public int CategoryStoreID
+        {
+            get;
+            set;
+        }
+
         public Category CategoryID
         {
             get;

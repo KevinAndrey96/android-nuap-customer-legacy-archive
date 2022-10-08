@@ -189,7 +189,9 @@
                 mainViewModel.User.api_token,
                 "https://thenuap.com",
                 this.Category.Id,
-                mainViewModel.AddressDetail.Id);
+                mainViewModel.AddressDetail.Id,
+                mainViewModel.CategoryStoreID
+            );
 
             if (response == null)
             {

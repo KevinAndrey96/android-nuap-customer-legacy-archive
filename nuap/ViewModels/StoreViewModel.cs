@@ -11,6 +11,7 @@
 
     public class StoreViewModel : BaseViewModel
     {
+        private int storeID;
         private string email;
         private string phone;
         private string companyName;
@@ -113,8 +114,15 @@
             set { SetValue(ref this.logo, value); }
         }
 
+        public int StoreID
+        {
+            get { return this.storeID; }
+            set { SetValue(ref this.storeID, value); }
+        }
+
         public StoreViewModel(Commerce store)
         {
+            this.StoreID = store.Id;
             this.Email = store.Email;
             this.Phone = store.Phone;
             this.CompanyName = store.BusinessName;
@@ -125,6 +133,9 @@
 
             this.apiService = new ApiService();
             this.LoadCategories();
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.CategoryStoreID = this.StoreID;
         }
 
         private void Search()
@@ -180,7 +191,9 @@
             var response = await this.apiService.GetValidCategories(
                 mainViewModel.User.api_token,
                 "https://thenuap.com",
-                mainViewModel.AddressDetail.Id);
+                mainViewModel.AddressDetail.Id,
+                this.StoreID
+            );
 
             if (response == null)
             {
