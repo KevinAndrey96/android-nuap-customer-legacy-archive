@@ -1,27 +1,42 @@
-# Nuap Customer Mobile App (Legacy Archive)
+# Nuap: app Xamarin.Forms de clientes y comercios (archivo histórico)
 
-[![Unified Monorepo](https://img.shields.io/badge/Unified%20Monorepo-android-nuap-delivery-platform-blue.svg)](https://github.com/KevinAndrey96/android-nuap-delivery-platform)
-[![Status: Historical Archive](https://img.shields.io/badge/Status-Historical%20Archive-lightgrey.svg)](https://github.com/KevinAndrey96/android-nuap-delivery-platform)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/KevinAndrey96/android-nuap-delivery-platform/blob/master/LICENSE)
+![Estado: archivo histórico](https://img.shields.io/badge/Estado-archivo%20hist%C3%B3rico-lightgrey) ![Xamarin.Forms 4.8](https://img.shields.io/badge/Xamarin.Forms%204.8-3498DB) ![C#](https://img.shields.io/badge/C%23-239120) ![Android | iOS](https://img.shields.io/badge/Android%20%7C%20iOS-lightgrey)
 
-> [!IMPORTANT]
-> **This repository is preserved as a historical component archive.**
-> Development, maintenance, and full-stack containerization have been unified into the flagship production monorepo:
->
-> 🚀 **[KevinAndrey96/android-nuap-delivery-platform](https://github.com/KevinAndrey96/android-nuap-delivery-platform)**
->
-> Please refer to the main repository for the complete architecture, Docker Compose orchestration, automated test suites, and active documentation.
+> [!NOTE]
+> Código original de la app móvil de Nuap, la plataforma de domicilios de bebidas, para Android e iOS (2021). El producto continúa en **[android-nuap-delivery-platform](https://github.com/KevinAndrey96/android-nuap-delivery-platform)**, que reúne todos sus componentes con documentación actualizada.
 
----
+## Qué contiene
 
-## 📌 Historical Overview
+- Registro, inicio de sesión y verificación por código OTP.
+- Catálogo por categorías y tiendas, detalle de producto y carrito.
+- Direcciones de entrega, selección de medio de pago y pasarela web embebida.
+- Seguimiento de pedidos, calificaciones y tickets de soporte.
+- Módulo de comercio: inventario, alta y edición de productos, ventas y cambio de estado de pedidos.
+- Arquitectura MVVM con `ViewModels` y servicios por pantalla.
 
-This repository preserves the historical cross-platform Xamarin.Forms customer application originally developed for the Nuap on-demand cold beverage delivery platform. It featured catalog browsing, geofenced address selection, and PayU checkout.
+## Stack original
 
-All components, database schemas, and workflows have been merged and modernized into the primary repository: **[android-nuap-delivery-platform](https://github.com/KevinAndrey96/android-nuap-delivery-platform)**.
+| Componente | Tecnología |
+| :--- | :--- |
+| Lenguaje | C# (.NET Standard 2.0) |
+| UI | Xamarin.Forms 4.8 (XAML) |
+| Plataformas | Xamarin.Android y Xamarin.iOS |
+| Patrón | MVVM |
 
----
+## Ejecutarlo localmente
 
-## 📄 License
+Abre `nuap.sln` en Visual Studio 2019 o 2022 con la carga de trabajo de Xamarin y restaura los paquetes NuGet. Xamarin dejó de tener soporte en mayo de 2024; la versión vigente del producto vive en el monorepo.
 
-This historical archive is part of the project licensed under the MIT License. See the main repository for details.
+## Estado del repositorio
+
+- Se conserva sin cambios funcionales como referencia del código original (2021).
+- No recibe actualizaciones de dependencias; el mantenimiento ocurre en [android-nuap-delivery-platform](https://github.com/KevinAndrey96/android-nuap-delivery-platform).
+- En noviembre de 2026 se depuró el historial completo: se retiraron la llave de Google Maps y un JWT de prueba. Todos los commits conservan su fecha original.
+
+## Autoría
+
+Kevin Andrey Herrera Silva ([@KevinAndrey96](https://github.com/KevinAndrey96)), con aportes de Viviana Arango y Miguel Ochoa.
+
+## Licencia
+
+Código desarrollado para un cliente y publicado como muestra de portafolio. No incluye licencia de código abierto: todos los derechos reservados.
